@@ -34,7 +34,8 @@ function App() {
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black/10" />
         <Dialog.Content
-          className="w-min fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"
+          onOpenAutoFocus={(e) => e.preventDefault()}
+          className="w-min focus:outline-none fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"
           onClick={() => setActive(true)}
           onPointerDownOutside={(e) => {
             e.preventDefault();
@@ -62,10 +63,9 @@ const ObservedGameGrid = observer(GameGrid);
 
 function GameGrid() {
   const { board, initialLoad, setInitialLoadFalse } = useMinesweep();
-  const [showCursor, setShowCursor] = React.useState(true);
 
   const handleAnimationCompletion = () => {
-    const cell = document.getElementById("cell-817");
+    const cell = document.getElementById("cell-X4Y9");
 
     if (cell) {
       cell.classList.add(
@@ -87,9 +87,9 @@ function GameGrid() {
         {initialLoad && (
           <motion.div
             className="absolute"
-            initial={{ x: 500, y: 250, opacity: 0 }}
-            animate={{ x: 420, y: 205, opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ x: 200, y: 280, opacity: 0 }}
+            animate={{ x: 110, y: 230, opacity: 1 }}
+            exit={{ opacity: 0, transition: { delay: 0.1 } }}
             transition={{
               opacity: { duration: 0.5 },
               x: { delay: 0.5, duration: 1, type: "tween" },
@@ -382,7 +382,7 @@ const CellComponent = ({
 
   return (
     <Button
-      id={`cell-${cell.row}${cell.column}`}
+      id={`cell-X${cell.column}Y${cell.row}`}
       onClick={handleClick}
       onContextMenu={handleRightClick}
       size={size}
